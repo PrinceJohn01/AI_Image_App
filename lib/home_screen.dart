@@ -1,3 +1,4 @@
+import 'package:ai_image_app/api_services.dart';
 import 'package:ai_image_app/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +14,9 @@ class _HomeScreenState extends State<HomeScreen> {
   var sizes = ["Small", "Medium", "Large"];
   var value = ["256x256", "512x512", "1024x1024"];
   String? dropValue;
+  var textController = TextEditingController();
+  String image = '';
+  var isLoaded = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  children: [
                    Row(
                      children: [
-                      Expanded(
+                      SingleChildScrollView(
                         child: Container(
                           height: 44,
                           padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 4),
@@ -43,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(12)
                           ),
                           child: TextFormField(
+                            controller: textController,
                             decoration: const InputDecoration(
                               hintText: "eg 'Prince'",
                               border: InputBorder.none
@@ -57,7 +62,8 @@ class _HomeScreenState extends State<HomeScreen> {
                              color: Colors.white,
                              borderRadius: BorderRadius.circular(12),
                          ),
-                         child: DropdownButtonHideUnderline(child: DropdownButton(
+                         child: DropdownButtonHideUnderline(
+                           child: DropdownButton(
                              icon: const Icon(Icons.expand_more,color: btnColor,),
                              value: dropValue,
                              hint: const Text('Select Size'),
@@ -66,7 +72,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                    (index) => DropdownMenuItem(
                                      value: value[index],
                                      child: Text(sizes[index]), ),),
-                             onChanged: (value){},
+                             onChanged: (value){
+                               setState(() {
+                                 dropValue = value.toString();
+                               });
+                             },
                           ),
                          ),
                        )
@@ -80,15 +90,44 @@ class _HomeScreenState extends State<HomeScreen> {
                            backgroundColor: btnColor,
                            shape: const StadiumBorder()
                          ),
-                           onPressed: (){},
+                           onPressed: () async {
+                           if (textController.text.isNotEmpty && dropValue!.isNotEmpty){
+                             setState(() {
+                               isLoaded = false;
+                             });
+                             image = await Api.generateImage(textController.text, dropValue!);
+                             setState(() {
+                               isLoaded = true;
+                             });
+                            }else{
+                             ScaffoldMessenger.of(context).showSnackBar(
+                                 const SnackBar(
+                                     content: Text("Please enter the text and size"),),);
+                             }
+                           },
                            child: const Text("Generate"))),
                  ],
                   )),
             Expanded(
               flex: 4,
-                child: Container(
-                  color: Colors.amber,
-                )),
+                child: isLoaded ? Image.network(image): Container(
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset("assets/loader.gif"),
+                      const SizedBox(height: 12,),
+                      const Text("Image is been generated...",
+                      style: TextStyle(
+                        fontSize: 16.0,
+                      ),)
+                    ],
+                  ),
+                ),),
 
           ],
         ),
