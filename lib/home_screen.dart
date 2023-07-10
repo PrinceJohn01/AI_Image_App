@@ -22,6 +22,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
+        actions: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.all(8),
+                backgroundColor: btnColor,
+              ),
+              onPressed: (){},
+              child: const Text("My Arts"),
+            ),
+          ),
+        ],
         title: const Text('AI Image Generator',
           style: TextStyle(fontFamily: "Poppins-Bold",
               color: Colors.white,
@@ -38,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                  children: [
                    Row(
                      children: [
-                      SingleChildScrollView(
+                      Expanded(
                         child: Container(
                           height: 44,
                           padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 4),
@@ -166,7 +179,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),)
                     ],
                   ),
-                ),),
+                ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Developed by Prince John', style: TextStyle(
+                color: Colors.white,
+                fontSize: 14.0
+              ),),
+            )
 
           ],
         ),
