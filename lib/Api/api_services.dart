@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ai_image_app/api_key.dart';
+import 'package:ai_image_app/Api/api_key.dart';
 import 'package:http/http.dart' as http;
 
 class Api {

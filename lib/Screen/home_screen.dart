@@ -1,5 +1,5 @@
-import 'package:ai_image_app/api_services.dart';
-import 'package:ai_image_app/colors.dart';
+import 'package:ai_image_app/Api/api_services.dart';
+import 'package:ai_image_app/Constant/colors.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

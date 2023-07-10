@@ -1,5 +1,5 @@
-import 'package:ai_image_app/colors.dart';
-import 'package:ai_image_app/home_screen.dart';
+import 'package:ai_image_app/Constant/colors.dart';
+import 'package:ai_image_app/Screen/home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
