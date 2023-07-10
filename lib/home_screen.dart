@@ -110,7 +110,46 @@ class _HomeScreenState extends State<HomeScreen> {
                   )),
             Expanded(
               flex: 4,
-                child: isLoaded ? Image.network(image): Container(
+                child: isLoaded
+                    ? Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                           clipBehavior: Clip.antiAlias,
+                           decoration: BoxDecoration(
+                           borderRadius: BorderRadius.circular(12),
+                         ),
+                        child: Image.network(image, fit: BoxFit.contain,
+                        ),
+                ),
+                        const SizedBox(height: 12,),
+
+                        Row(children: [
+                          Expanded(child: ElevatedButton.icon(
+                            icon: const Icon(Icons.download_for_offline_rounded),
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(8),
+                              backgroundColor: btnColor,
+                            ),
+                            onPressed: (){},
+                            label: const Text("Download"),
+                            ),
+                          ),
+                          const SizedBox(width: 12,),
+                          ElevatedButton.icon(
+                          icon: const Icon(Icons.share),
+                          style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(8),
+                          backgroundColor: btnColor,
+                          ),
+                          onPressed: (){},
+                          label: const Text("Share"),
+                          ),
+                        ],
+                        )
+                      ],
+                    )
+                    : Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
